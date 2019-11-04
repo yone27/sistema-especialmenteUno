@@ -1,5 +1,10 @@
 <template>
   <v-container fluid>
+    <v-row v-if="error">
+      <v-col cols="12">
+        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+      </v-col>
+    </v-row>
     <v-row align="center" justify="center">
       <v-col cols="5">
         <v-card>

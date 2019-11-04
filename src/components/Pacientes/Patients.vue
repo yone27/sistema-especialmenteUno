@@ -2,17 +2,33 @@
   <v-container fluid>
     <v-row align="center" justify="center">
       <v-col cols="11">
-        <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
+        <v-data-table
+          :headers="headers"
+          :search="search"
+          :items="desserts"
+          sort-by="calories"
+          class="elevation-1"
+        >
           <template v-slot:top>
             <v-toolbar>
-              <v-toolbar-title>My CRUD</v-toolbar-title>
+              <v-toolbar-title>
+                <v-icon dark>mdi-medical-bag</v-icon>
+                PACIENTES
+              </v-toolbar-title>
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
               <v-dialog v-model="dialog" max-width="500px">
                 <template v-slot:activator="{ on }">
-                  <v-btn class="mx-2" fab dark color="teal" v-on="on">
+                  <v-btn class="mx-2" fab small dark color="teal">
                     <v-icon dark>mdi-plus</v-icon>
                   </v-btn>
+                  <v-text-field
+                    v-model="search"
+                    append-icon="mdi-account-search"
+                    label="Search"
+                    single-line
+                    hide-details
+                  ></v-text-field>
                 </template>
                 <v-card>
                   <v-card-title>
@@ -55,11 +71,14 @@
             <v-chip :color="getColor(item.calories)" dark>{{ item.calories }}</v-chip>
           </template>
           <template v-slot:item.action="{ item }">
-            <v-btn class="mx-2" fab dark small color="cyan" @click="editItem(item)">
+            <!-- <v-btn class="mx-2" fab dark small color="cyan" @click="editItem(item)">
               <v-icon dark>mdi-pencil</v-icon>
-            </v-btn>
+            </v-btn>-->
             <v-btn class="mx-2" fab dark small color="pink" @click="deleteItem(item)">
               <v-icon dark>mdi-delete</v-icon>
+            </v-btn>
+            <v-btn class="mx-2" fab dark small color="cyan" @click="deleteItem(item)">
+              <v-icon dark>mdi-arrow-down-bold</v-icon>
             </v-btn>
           </template>
           <template v-slot:no-data>
@@ -77,6 +96,8 @@ import { log } from "util";
 export default {
   name: "Patients",
   data: () => ({
+    search: "",
+
     dialog: false,
     headers: [
       {

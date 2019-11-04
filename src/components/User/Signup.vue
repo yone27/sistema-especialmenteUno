@@ -1,5 +1,10 @@
 <template>
   <v-container fluid>
+    <v-row v-if="error">
+      <v-col cols="12">
+        <app-alert @dismissed="onDismissed" :text="error.message"></app-alert>
+      </v-col>
+    </v-row>
     <v-row align="center" justify="center">
       <v-col cols="5">
         <v-card>
@@ -46,7 +51,7 @@
                     <v-btn :disabled="loading" :loading="loading" type="submit">
                       Registrarse
                       <span slot="loader" class="custom-loader">
-                        <v-icon light>cached</v-icon>
+                        <v-icon light>mdi-cached</v-icon>
                       </span>
                     </v-btn>
                   </v-col>
@@ -68,7 +73,7 @@ export default {
       email: null,
       password: null,
       confirmPassword: null,
-      displayName: "yoneiker puto gonzalez",
+      displayName: null,
       dialog: true
     };
   },
